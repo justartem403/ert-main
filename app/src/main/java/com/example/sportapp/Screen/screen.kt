@@ -7,6 +7,8 @@ sealed class Screen(val route: String) {
     data object Nutrition : Screen("nutrition")
     data object Workouts : Screen("workouts")
     data object Notes : Screen("notes")
+    data object Login : Screen("login")
+    data object Profile : Screen("profile")
 
     // Дополнительные экраны для будущего расширения
     data object WorkoutDetails : Screen("workout_details/{workoutId}") {
@@ -27,6 +29,8 @@ sealed class Screen(val route: String) {
                 "notes" -> Notes
                 "workout_details" -> WorkoutDetails
                 "meal_plan" -> MealPlan
+                "login" -> Login
+                "profile" -> Profile
                 else -> Home
             }
         }

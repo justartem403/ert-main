@@ -4,7 +4,6 @@ package com.example.sportapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -105,15 +104,24 @@ fun MainScreen() {
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = Screen.Login.route,
             modifier = Modifier.padding(paddingValues)
         ) {
+
+            composable(Screen.Login.route) {
+                LoginScreen(navController)
+            }
+            composable(Screen.Profile.route) {
+                ProfileScreen(lastBmi = null)
+            }
+
             composable(Screen.Home.route) { HomeScreen() }
             composable(Screen.BMICalculator.route) {
                 BMICalculatorScreen { bmi ->
                     navController.navigate("food_management/${bmi ?: "null"}")
                 }
             }
+
             composable(Screen.Nutrition.route) {
                 NutritionScreen {
                     navController.navigate("food_management/null")
