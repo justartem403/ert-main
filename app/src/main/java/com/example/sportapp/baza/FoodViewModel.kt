@@ -1,8 +1,9 @@
-package com.example.sportapp
+package com.example.sportapp.baza
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sportapp.food.Food
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 

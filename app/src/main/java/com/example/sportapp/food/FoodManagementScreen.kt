@@ -1,4 +1,4 @@
-package com.example.sportapp
+package com.example.sportapp.food
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.sportapp.baza.FoodViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

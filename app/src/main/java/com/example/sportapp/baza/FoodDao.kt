@@ -1,10 +1,11 @@
-package com.example.sportapp
+package com.example.sportapp.baza
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.example.sportapp.food.Food
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,4 +1,4 @@
-package com.example.sportapp
+package com.example.sportapp.Screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -51,18 +51,22 @@ fun BMICalculatorScreen(onBmiCalculated: (Float?) -> Unit) {
 
         Button(
             onClick = {
-                val heightVal = height.toFloatOrNull()
-                val weightVal = weight.toFloatOrNull()
+                try {
+                    val heightVal = height.toFloatOrNull()
+                    val weightVal = weight.toFloatOrNull()
 
-                if (heightVal != null && weightVal != null && heightVal > 0 && weightVal > 0) {
-                    val heightInMeters = heightVal / 100
-                    bmi = weightVal / (heightInMeters * heightInMeters)
-                    errorMessage = null
-                    onBmiCalculated(bmi)
-                } else {
-                    errorMessage = "Введите корректные значения"
+                    if (heightVal != null && weightVal != null && heightVal > 0 && weightVal > 0) {
+                        val heightInMeters = heightVal / 100
+                        bmi = weightVal / (heightInMeters * heightInMeters)
+                        errorMessage = null
+                        onBmiCalculated(bmi)
+                    } else {
+                        errorMessage = "Введите корректные значения"
+                        bmi = null
+                    }
+                } catch (e: Exception) {
+                    errorMessage = "Ошибка при расчете. Проверьте введенные данные"
                     bmi = null
-                    onBmiCalculated(null)
                 }
             },
             modifier = Modifier.fillMaxWidth()

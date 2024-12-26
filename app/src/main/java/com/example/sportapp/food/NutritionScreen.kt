@@ -1,4 +1,4 @@
-package com.example.sportapp
+package com.example.sportapp.food
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun NotesScreen() {
+fun NutritionScreen(onManageFoods: () -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -17,20 +17,20 @@ fun NotesScreen() {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Заметки",
+            text = "Питание",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         Text(
-            text = "Здесь вы сможете вести личный дневник тренировок и питания",
+            text = "Здесь вы можете отслеживать свой рацион и питательные вещества",
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         Button(
-            onClick = { /* TODO: Implement note creation logic */ },
+            onClick = onManageFoods,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Создать заметку")
+            Text("Управление продуктами")
         }
     }
 }

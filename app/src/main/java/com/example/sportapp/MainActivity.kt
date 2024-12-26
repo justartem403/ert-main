@@ -1,6 +1,5 @@
 package com.example.sportapp
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,10 +22,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
-import com.example.sportapp.Screen.Screen
+import com.example.sportapp.Screen.*
+import com.example.sportapp.food.*
+import com.example.sportapp.login.*
+import com.example.sportapp.GYM.*
 import com.example.sportapp.ui.theme.SportAppTheme
 
 class MainActivity : ComponentActivity() {
+    private val bmiState = mutableStateOf<Float?>(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -35,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
                 ) {
-                    MainScreen()
+                    MainScreen(bmiState)
                 }
             }
         }
@@ -44,7 +48,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(bmiState: MutableState<Float?>) {
     val navController = rememberNavController()
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
@@ -63,6 +67,7 @@ fun MainScreen() {
                             Screen.Nutrition -> "Питание"
                             Screen.Workouts -> "Тренировки"
                             Screen.Notes -> "Заметки"
+                            Screen.FoodManagement -> "Управление продуктами"
                             else -> "Спортивное приложение"
                         }
                     )
@@ -107,45 +112,49 @@ fun MainScreen() {
             startDestination = Screen.Login.route,
             modifier = Modifier.padding(paddingValues)
         ) {
-
             composable(Screen.Login.route) {
                 LoginScreen(navController)
             }
+
             composable(Screen.Profile.route) {
-                ProfileScreen(lastBmi = null)
+                ProfileScreen(lastBmi = bmiState.value)
             }
 
-            composable(Screen.Home.route) { HomeScreen() }
+            composable(Screen.Home.route) {
+                HomeScreen()
+            }
+
             composable(Screen.BMICalculator.route) {
                 BMICalculatorScreen { bmi ->
-                    navController.navigate("food_management/${bmi ?: "null"}")
+                    bmiState.value = bmi
                 }
+            }
+
+            composable(Screen.Workouts.route) {
+                WorkoutsScreen(bmiState.value)
             }
 
             composable(Screen.Nutrition.route) {
-                NutritionScreen {
-                    navController.navigate("food_management/null")
-                }
+                NutritionScreen(
+                    onManageFoods = {
+                        navController.navigate(Screen.FoodManagement.route)
+                    }
+                )
             }
-            composable(Screen.Workouts.route) { WorkoutsScreen() }
-            composable(Screen.Notes.route) { NotesScreen() }
-            composable(
-                "food_management/{bmi}",
-                arguments = listOf(navArgument("bmi") { type = NavType.StringType; nullable = true })
-            ) { backStackEntry ->
-                FoodManagementScreen(backStackEntry.arguments?.getString("bmi")?.toFloatOrNull())
+
+            composable(Screen.FoodManagement.route) {
+                FoodManagementScreen(currentBmi = bmiState.value)
             }
+
+            composable(Screen.Notes.route) {
+                NotesScreen()
+            }
+
             composable(
-                Screen.WorkoutDetails.route,
+                route = Screen.WorkoutDetails.route,
                 arguments = listOf(navArgument("workoutId") { type = NavType.StringType })
             ) { backStackEntry ->
                 WorkoutDetailsScreen(backStackEntry.arguments?.getString("workoutId"))
-            }
-            composable(
-                Screen.MealPlan.route,
-                arguments = listOf(navArgument("dayId") { type = NavType.StringType })
-            ) { backStackEntry ->
-                MealPlanScreen(backStackEntry.arguments?.getString("dayId"))
             }
         }
 
@@ -154,13 +163,19 @@ fun MainScreen() {
             onDismissRequest = { showMenu = false }
         ) {
             DropdownMenuItem(
-                text = { Text("Настройки") },
-                onClick = { showMenu = false },
+                text = { Text("Заметки") },
+                onClick = {
+                    showMenu = false
+                    navController.navigate(Screen.Notes.route)
+                },
                 leadingIcon = { Icon(Icons.Filled.Settings, contentDescription = null) }
             )
             DropdownMenuItem(
                 text = { Text("Профиль") },
-                onClick = { showMenu = false },
+                onClick = {
+                    showMenu = false
+                    navController.navigate(Screen.Profile.route)
+                },
                 leadingIcon = { Icon(Icons.Filled.Person, contentDescription = null) }
             )
             DropdownMenuItem(

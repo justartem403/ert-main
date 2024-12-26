@@ -1,4 +1,4 @@
-package com.example.sportapp
+package com.example.sportapp.login
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -22,8 +22,8 @@ fun ProfileScreen(lastBmi: Float?) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        ProfileInfoItem("ФИО", "Иванов Иван Иванович")
-        ProfileInfoItem("Возраст", "30 лет")
+        ProfileInfoItem("ФИО", "Алиев Артём")
+        ProfileInfoItem("Возраст", "19 лет")
 
         lastBmi?.let { bmi ->
             ProfileInfoItem(

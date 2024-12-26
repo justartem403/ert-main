@@ -9,8 +9,8 @@ sealed class Screen(val route: String) {
     data object Notes : Screen("notes")
     data object Login : Screen("login")
     data object Profile : Screen("profile")
+    data object FoodManagement : Screen("food_management")
 
-    // Дополнительные экраны для будущего расширения
     data object WorkoutDetails : Screen("workout_details/{workoutId}") {
         fun createRoute(workoutId: String) = "workout_details/$workoutId"
     }
@@ -31,6 +31,7 @@ sealed class Screen(val route: String) {
                 "meal_plan" -> MealPlan
                 "login" -> Login
                 "profile" -> Profile
+                "food_management" -> FoodManagement // Добавляем обработку нового маршрута
                 else -> Home
             }
         }

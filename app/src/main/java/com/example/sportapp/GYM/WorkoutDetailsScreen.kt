@@ -1,4 +1,4 @@
-package com.example.sportapp
+package com.example.sportapp.GYM
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun NutritionScreen(onManageFoods: () -> Unit = {}) {
+fun WorkoutDetailsScreen(workoutId: String?) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -17,20 +17,13 @@ fun NutritionScreen(onManageFoods: () -> Unit = {}) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Питание",
+            text = "Детали тренировки",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         Text(
-            text = "Здесь вы можете отслеживать свой рацион и питательные вещества",
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(bottom = 16.dp)
+            text = "Информация о тренировке: $workoutId",
+            style = MaterialTheme.typography.bodyLarge
         )
-        Button(
-            onClick = onManageFoods,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Управление продуктами")
-        }
     }
 }

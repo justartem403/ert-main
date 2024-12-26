@@ -1,4 +1,4 @@
-package com.example.sportapp
+package com.example.sportapp.food
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,4 +14,10 @@ data class Food(
     val carbs: Float,          // Углеводы
     val recommendedForBmiUnder: Boolean = false,  // Рекомендуется при низком ИМТ
     val recommendedForBmiOver: Boolean = false    // Рекомендуется при высоком ИМТ
+)
+
+data class User(
+    val username: String,
+    val password: String,
+    val email: String
 )
